@@ -1,26 +1,14 @@
-import express from 'express'
+import express from 'express';
+import SelecaoController from './app/controllers/SelecaoController.js';
 
-const app = express()
+const app = express();
 
-//mock
-const selecoes = [
-    {id:1,selecao:'Brasil',grupo:'G'},
-    {id:2,selecao:'Suiça',grupo:'G'},
-    {id:3,selecao:'Sérvia',grupo:'G'},
-    {id:4,selecao:'Camarões',grupo:'G'}
-]
+app.use(express.json());
 
-app.get('/', (req,res) => {
-    res.send('Curso de Node.js')
-})
+app.get('/selecoes', SelecaoController.index);
+app.get('/selecoes/:id', SelecaoController.show);
+app.post('/selecoes', SelecaoController.store);
+app.put('/selecoes/:id', SelecaoController.update);
+app.delete('/selecoes/:id', SelecaoController.delete);
 
-app.get('/selecoes', (req,res)=> {
-    res.status(200).send(selecoes)
-})
-
-app.post('/selecoes',(req,res) =>{
-    selecoes.push(req.body)
-    res.status(201).send('Seleção cadastrada com sucesso!')
-})
-
-export default app
+export default app;
